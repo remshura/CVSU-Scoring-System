@@ -1793,6 +1793,178 @@ body {
   .score-input, .deduction-input { font-size: 18px; }
 }
 
+/* ==================== Comprehensive Responsive Polish ==================== */
+
+/* ----- Big TVs / 4K displays (1920px+) ----- */
+@media (min-width: 1920px) {
+  .container { max-width: 1700px; }
+  body { padding: 30px; }
+  .panel { padding: 32px; }
+  .header-info h1 { font-size: 32px; }
+  .total-value { font-size: 46px; }
+  .leader-score { font-size: 26px; }
+  .score-input { font-size: 26px; padding: 16px 10px; }
+  .timer-display { font-size: 26px; }
+  .performer-card { padding: 26px; }
+}
+
+/* ----- Standard desktop (1280-1600px): default layout works ----- */
+
+/* ----- Small laptop / large tablet landscape (1024-1280px) ----- */
+@media (max-width: 1280px) and (min-width: 1101px) {
+  .dashboard { grid-template-columns: 1fr 340px; gap: 18px; }
+  .leaderboard-panel { padding: 20px; }
+  .leader-score { font-size: 19px; }
+  .leader-name { font-size: 13px; }
+  .header-info h1 { font-size: 22px; }
+  .btn { padding: 10px 14px; font-size: 12px; }
+  .total-value { font-size: 32px; }
+  .scores-grid { grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); }
+}
+
+/* ----- Tablet landscape (900-1100px) ----- */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .scores-grid { grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 9px; }
+  .bottom-row { gap: 11px; }
+  .header-actions { gap: 6px; }
+  .btn { padding: 10px 14px; font-size: 12px; }
+  .total-value { font-size: 34px; }
+}
+
+/* ----- Tablet portrait (600-900px) ----- */
+@media (max-width: 900px) and (min-width: 601px) {
+  .header-actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+    gap: 6px;
+  }
+  .header-actions .btn { padding: 10px 6px; font-size: 11px; justify-content: center; gap: 3px; }
+  .scores-grid { grid-template-columns: repeat(auto-fit, minmax(95px, 1fr)); gap: 9px; }
+  .bottom-row { grid-template-columns: 1fr 1fr 1.4fr; gap: 10px; }
+  .total-value { font-size: 30px; }
+  .timer-display { font-size: 20px; }
+}
+
+/* ----- Large phone landscape / small tablet (480-760px) ----- */
+@media (max-width: 760px) and (min-width: 481px) {
+  .bottom-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 10px;
+  }
+  .bottom-row .deduction-block { grid-column: 1; grid-row: 1; }
+  .bottom-row .timer-block { grid-column: 2; grid-row: 1; }
+  .bottom-row .total-block { grid-column: 1 / -1; grid-row: 2; }
+  .header-actions {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    width: 100%;
+    gap: 5px;
+  }
+  .header-actions .btn { padding: 9px 4px; font-size: 10px; justify-content: center; }
+  .panel { padding: 18px; }
+}
+
+/* ----- Phone portrait (360-480px) ----- */
+@media (max-width: 480px) {
+  .bottom-row {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 9px;
+  }
+  .bottom-row .deduction-block { grid-column: 1; grid-row: 1; }
+  .bottom-row .timer-block { grid-column: 2; grid-row: 1; }
+  .bottom-row .total-block { grid-column: 1 / -1; grid-row: 2; }
+  .timer-display { font-size: 18px; margin-bottom: 5px; }
+  .timer-label { font-size: 9px; letter-spacing: 1px; }
+  .timer-controls { flex-wrap: wrap; justify-content: center; gap: 4px; }
+  .timer-btn { padding: 4px 8px; font-size: 9px; }
+  .timer-btn-reset { padding: 4px 6px; }
+  .deduction-input { font-size: 17px; }
+  .deduction-block { padding: 8px 12px; }
+  .total-value { font-size: 26px; }
+  .total-label { font-size: 9px; }
+  .total-formula { font-size: 8px; }
+  .total-block { padding: 10px 14px; }
+}
+
+/* ----- Tiny phones (<360px) ----- */
+@media (max-width: 360px) {
+  body { padding: 6px; }
+  .panel { padding: 12px; border-radius: 10px; }
+  .performer-card { padding: 12px; }
+  .scores-grid { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .bottom-row { grid-template-columns: 1fr; }
+  .bottom-row .deduction-block,
+  .bottom-row .timer-block,
+  .bottom-row .total-block { grid-column: 1; }
+  .bottom-row .timer-block { grid-row: 2; }
+  .bottom-row .total-block { grid-row: 3; }
+  .header-actions { grid-template-columns: repeat(2, 1fr); }
+  .setup-card { padding: 22px 14px; }
+  .score-input { font-size: 15px; padding: 9px 4px; }
+  .add-performer-form .btn { padding: 11px; font-size: 12px; }
+}
+
+/* ----- Phone landscape orientation (low height) ----- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .setup-screen { min-height: auto; padding: 20px 0; }
+  .setup-card { padding: 28px 30px; }
+  .setup-header { margin-bottom: 22px; }
+  .cvsu-logo { width: 60px; height: 60px; font-size: 17px; margin-bottom: 10px; }
+  .setup-title { font-size: 22px; }
+  .form-group { margin-bottom: 14px; }
+  .judges-selector { grid-template-columns: repeat(8, 1fr); }
+}
+
+/* ----- TV Display intermediate (1100-1400px) ----- */
+@media (max-width: 1400px) and (min-width: 1101px) {
+  .tv-performer-name { font-size: 48px; }
+  .tv-judge-value { font-size: 36px; }
+}
+
+/* ----- TV Display: Large/4K TVs (1920px+) ----- */
+@media (min-width: 1920px) {
+  .tv-display { padding: 60px 70px; }
+  .tv-performer-name { font-size: 72px; margin-bottom: 12px; }
+  .tv-rank-badge { font-size: 22px; padding: 8px 28px; margin-bottom: 26px; }
+  .tv-brand-text h2 { font-size: 44px; }
+  .tv-brand-text p { font-size: 17px; }
+  .tv-brand-logo { width: 100px; height: 100px; font-size: 28px; }
+  .tv-section-label { font-size: 20px; letter-spacing: 4px; }
+  .tv-judge-value { font-size: 56px; }
+  .tv-judge-label { font-size: 16px; min-width: 90px; }
+  .tv-time-label { font-size: 20px; letter-spacing: 4px; }
+  .tv-deduction-label { font-size: 18px; letter-spacing: 4px; }
+}
+
+/* ----- Timer Fullscreen on small phones ----- */
+@media (max-width: 380px) {
+  .timer-fs-name { font-size: 18px; margin-bottom: 14px; margin-top: 70px; }
+  .timer-fs-display { letter-spacing: -3px; }
+  .timer-fs-controls { gap: 6px; }
+  .timer-fs-btn { padding: 10px 16px; font-size: 11px; letter-spacing: 1px; }
+}
+
+/* ----- Timer Fullscreen on landscape phone ----- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .timer-fs-name { margin-bottom: 8px; font-size: clamp(20px, 4vh, 36px); }
+  .timer-fs-display { font-size: clamp(80px, 32vh, 280px); letter-spacing: -6px; line-height: 0.85; }
+  .timer-fs-status { margin-top: 8px; font-size: 12px; }
+  .timer-fs-controls { margin-top: 14px; gap: 10px; }
+  .timer-fs-btn { padding: 10px 22px; font-size: 13px; }
+}
+
+/* ----- Reduced motion preference ----- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .timer-display.running, .tv-time-value.running, .timer-fs-display.running { animation: none; }
+}
+
 /* ==================== Print ==================== */
 @media print {
   body { background: white !important; padding: 0; }
