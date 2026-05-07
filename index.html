@@ -640,14 +640,90 @@ body {
 /* ==================== Deduction (YELLOW) & Total (BLUE) ==================== */
 .bottom-row {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 14px;
+  grid-template-columns: 1fr 1fr 1.4fr;
+  gap: 12px;
   margin-top: 8px;
 }
 
-@media (max-width: 600px) {
-  .bottom-row { grid-template-columns: 1fr; }
+@media (max-width: 760px) {
+  .bottom-row { grid-template-columns: 1fr 1fr; }
+  .bottom-row .total-block { grid-column: 1 / -1; }
 }
+
+@media (max-width: 480px) {
+  .bottom-row { grid-template-columns: 1fr; }
+  .bottom-row .total-block { grid-column: 1; }
+}
+
+/* ==================== Timer Block (CVSU Green) ==================== */
+.timer-block {
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border: 2px solid var(--cvsu-green);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(13,107,58,0.2);
+}
+
+.timer-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--cvsu-gold);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.timer-display {
+  font-size: 22px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+  color: white;
+  margin-bottom: 6px;
+  line-height: 1;
+}
+
+.timer-display.running { color: var(--cvsu-gold); }
+
+.timer-controls {
+  display: flex;
+  gap: 5px;
+}
+
+.timer-btn {
+  background: var(--cvsu-gold);
+  color: var(--cvsu-green-dark);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.timer-btn:hover { background: white; transform: translateY(-1px); }
+
+.timer-btn-running { background: #ff5252; color: white; }
+.timer-btn-running:hover { background: #ff7575; }
+
+.timer-btn-reset {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  padding: 5px 8px;
+}
+
+.timer-btn-reset:hover { background: rgba(255,255,255,0.4); }
 
 .deduction-block {
   background: linear-gradient(135deg, var(--deduction-yellow-soft), #fff8e1);
@@ -1009,16 +1085,89 @@ body {
 .tv-main {
   flex: 1;
   display: grid;
-  grid-template-columns: 1.7fr 1fr;
+  grid-template-columns: 1fr 1.6fr 1fr;
   grid-template-rows: 1fr auto;
-  gap: 24px;
+  gap: 22px;
   align-items: stretch;
   min-height: 0;
 }
 
-.tv-main > .tv-total { grid-column: 1; grid-row: 1; }
-.tv-main > .tv-judges { grid-column: 2; grid-row: 1; }
+.tv-main > .tv-judges { grid-column: 1; grid-row: 1; }
+.tv-main > .tv-total { grid-column: 2; grid-row: 1; }
+.tv-main > .tv-time { grid-column: 3; grid-row: 1; }
 .tv-main > .tv-side { grid-column: 1 / -1; grid-row: 2; }
+
+/* Time column (CVSU GREEN/GOLD) */
+.tv-time {
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border-radius: 24px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  box-shadow: 0 15px 50px rgba(13, 107, 58, 0.45);
+  border: 4px solid rgba(244, 196, 48, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.tv-time::before {
+  content: '';
+  position: absolute;
+  bottom: -80px; right: -80px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(244,196,48,0.18) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.tv-time-label {
+  color: var(--cvsu-gold);
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 14px;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tv-time-value {
+  color: white;
+  font-size: clamp(64px, 9vw, 120px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -2px;
+  line-height: 0.95;
+  text-shadow: 0 6px 25px rgba(0,0,0,0.35);
+  position: relative;
+  z-index: 1;
+}
+
+.tv-time-value.running {
+  color: var(--cvsu-gold);
+  animation: pulseTime 1s ease-in-out infinite;
+}
+
+@keyframes pulseTime {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; }
+}
+
+.tv-time-status {
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.75);
+  position: relative;
+  z-index: 1;
+}
 
 /* Judge scores column (RED) */
 .tv-judges {
@@ -1288,6 +1437,18 @@ body {
   .tv-judge-value { font-size: 32px; }
 }
 
+@media (max-width: 950px) {
+  .tv-main {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr auto;
+  }
+  .tv-main > .tv-total { grid-column: 1 / -1; grid-row: 1; }
+  .tv-main > .tv-judges { grid-column: 1; grid-row: 2; }
+  .tv-main > .tv-time { grid-column: 2; grid-row: 2; }
+  .tv-main > .tv-side { grid-column: 1 / -1; grid-row: 3; }
+  .tv-time-value { font-size: clamp(54px, 12vw, 100px); }
+}
+
 @media (max-width: 700px) {
   .tv-display { padding: 16px 12px; }
   .tv-top { flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
@@ -1299,18 +1460,21 @@ body {
   .tv-rank-badge { font-size: 13px; padding: 5px 16px; margin-bottom: 14px; }
   .tv-main {
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
-    gap: 14px;
+    grid-template-rows: auto auto auto auto;
+    gap: 12px;
   }
   .tv-main > .tv-total { grid-column: 1; grid-row: 1; }
   .tv-main > .tv-judges { grid-column: 1; grid-row: 2; }
-  .tv-main > .tv-side { grid-column: 1; grid-row: 3; flex-direction: column; }
+  .tv-main > .tv-time { grid-column: 1; grid-row: 3; padding: 18px; }
+  .tv-main > .tv-side { grid-column: 1; grid-row: 4; flex-direction: column; }
   .tv-judges { padding: 18px 16px; }
   .tv-section-label { font-size: 13px; letter-spacing: 2px; }
   .tv-judge-value { font-size: 28px; }
   .tv-judge-label { font-size: 11px; min-width: 60px; }
   .tv-total-label { font-size: 13px; letter-spacing: 2.5px; }
   .tv-deduction-label { font-size: 12px; letter-spacing: 2px; }
+  .tv-time-label { font-size: 13px; letter-spacing: 2px; margin-bottom: 8px; }
+  .tv-time-value { font-size: 56px; }
   .tv-nav-btn { padding: 10px 18px; font-size: 11px; }
   .tv-nav-info { font-size: 11px; padding: 0 8px; }
 }
@@ -1580,6 +1744,12 @@ body {
       <div class="tv-total-formula" id="tv-total-formula"></div>
     </div>
 
+    <div class="tv-time">
+      <div class="tv-time-label">⏱ Time</div>
+      <div class="tv-time-value" id="tv-time-value">0:00</div>
+      <div class="tv-time-status" id="tv-time-status">Ready</div>
+    </div>
+
     <div class="tv-side">
       <div class="tv-deduction">
         <div class="tv-deduction-label">Deduction</div>
@@ -1613,7 +1783,7 @@ body {
 <script>
 'use strict';
 
-const STORAGE_KEY = 'cvsu_ugames_scoreboard_v4';
+const STORAGE_KEY = 'cvsu_ugames_scoreboard_v5';
 
 const state = {
   event: 'U-Games 2026',
@@ -1713,6 +1883,8 @@ function ensureShape(p) {
   if (p.scores.length > state.numJudges) p.scores = p.scores.slice(0, state.numJudges);
   if (p.deduction === undefined || p.deduction === null) p.deduction = '';
   if (typeof p.name !== 'string') p.name = '';
+  if (typeof p.timeSeconds !== 'number') p.timeSeconds = 0;
+  if (p.timerRunningAt === undefined) p.timerRunningAt = null;
 }
 
 // ============== Rendering ==============
@@ -1810,6 +1982,14 @@ function renderPerformers() {
           <input type="number" class="deduction-input" data-pid="${p.id}"
                  value="${escapeHtml(p.deduction)}" min="0" step="0.01" placeholder="0" inputmode="decimal">
         </div>
+        <div class="timer-block">
+          <div class="timer-label">⏱ Time</div>
+          <div class="timer-display ${p.timerRunningAt ? 'running' : ''}" data-timer-pid="${p.id}">${formatTime(getPerformerTime(p))}</div>
+          <div class="timer-controls">
+            <button class="timer-btn timer-btn-toggle ${p.timerRunningAt ? 'timer-btn-running' : ''}" data-tact="toggle" data-pid="${p.id}">${p.timerRunningAt ? '⏸ Stop' : '▶ Start'}</button>
+            <button class="timer-btn timer-btn-reset" data-tact="reset" data-pid="${p.id}" title="Reset timer">↺</button>
+          </div>
+        </div>
         <div class="total-block">
           <div class="total-block-info">
             <div class="total-label">${calc.complete ? 'Total Score' : `Partial · ${calc.filledCount}/${state.numJudges} Judges`}</div>
@@ -1827,6 +2007,17 @@ function renderPerformers() {
         openTvDisplay(p.id);
       });
     }
+
+    // Bind timer buttons directly (same reason)
+    card.querySelectorAll('[data-tact]').forEach(btn => {
+      btn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        const action = btn.dataset.tact;
+        const pid = btn.dataset.pid;
+        if (action === 'toggle') toggleTimer(pid);
+        else if (action === 'reset') resetTimer(pid);
+      });
+    });
 
     list.appendChild(card);
   });
@@ -2171,6 +2362,69 @@ function bindMainEvents() {
   });
 }
 
+// ============== Timer ==============
+function getPerformerTime(p) {
+  let total = parseFloat(p.timeSeconds) || 0;
+  if (p.timerRunningAt) total += (Date.now() - p.timerRunningAt) / 1000;
+  return total;
+}
+
+function formatTime(seconds) {
+  if (!seconds || seconds < 0 || isNaN(seconds)) seconds = 0;
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}:${String(s).padStart(2, '0')}`;
+}
+
+function toggleTimer(id) {
+  const p = state.performers.find(x => x.id === id);
+  if (!p) return;
+  if (p.timerRunningAt) {
+    const elapsed = (Date.now() - p.timerRunningAt) / 1000;
+    p.timeSeconds = (parseFloat(p.timeSeconds) || 0) + elapsed;
+    p.timerRunningAt = null;
+  } else {
+    p.timerRunningAt = Date.now();
+  }
+  saveState();
+  renderAll();
+  refreshTvIfOpen();
+  startTimerLoop();
+}
+
+function resetTimer(id) {
+  const p = state.performers.find(x => x.id === id);
+  if (!p) return;
+  p.timeSeconds = 0;
+  p.timerRunningAt = null;
+  saveState();
+  renderAll();
+  refreshTvIfOpen();
+}
+
+let timerInterval = null;
+function startTimerLoop() {
+  if (timerInterval) return;
+  timerInterval = setInterval(() => {
+    const anyRunning = state.performers.some(p => p.timerRunningAt);
+    if (!anyRunning) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      return;
+    }
+    state.performers.forEach(p => {
+      if (!p.timerRunningAt) return;
+      const t = formatTime(getPerformerTime(p));
+      const cardEl = document.querySelector(`[data-timer-pid="${p.id}"]`);
+      if (cardEl) cardEl.textContent = t;
+      if (tvCurrentId === p.id) {
+        const tvEl = $('#tv-time-value');
+        if (tvEl) tvEl.textContent = t;
+      }
+    });
+  }, 250);
+}
+
 // ============== TV Display ==============
 let tvCurrentId = null;
 
@@ -2244,6 +2498,19 @@ function renderTvDisplay() {
   // Deduction
   $('#tv-deduction-value').textContent = formatNumber(calc.deduction);
 
+  // Time
+  const tvTimeEl = $('#tv-time-value');
+  const tvTimeStatus = $('#tv-time-status');
+  if (tvTimeEl) {
+    tvTimeEl.textContent = formatTime(getPerformerTime(p));
+    tvTimeEl.classList.toggle('running', !!p.timerRunningAt);
+  }
+  if (tvTimeStatus) {
+    tvTimeStatus.textContent = p.timerRunningAt
+      ? '● LIVE'
+      : (p.timeSeconds > 0 ? 'Final' : 'Ready');
+  }
+
   // Nav
   const idx = state.performers.findIndex(x => x.id === tvCurrentId);
   $('#tv-nav-info').textContent = `${idx + 1} / ${state.performers.length}`;
@@ -2280,7 +2547,16 @@ function init() {
   bindTvDisplay();
 
   if (loadState()) {
-    state.performers.forEach(ensureShape);
+    state.performers.forEach(p => {
+      ensureShape(p);
+      // Stop any timer that was left running from a previous session
+      if (p.timerRunningAt) {
+        const elapsed = (Date.now() - p.timerRunningAt) / 1000;
+        p.timeSeconds = (parseFloat(p.timeSeconds) || 0) + elapsed;
+        p.timerRunningAt = null;
+      }
+    });
+    saveState();
     $('#event-name').value = state.event;
     $('#event-category').value = state.category;
     $('#max-score').value = state.maxScore;
