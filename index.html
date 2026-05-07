@@ -967,6 +967,196 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ==================== Fullscreen Timer Mode ==================== */
+.timer-fs {
+  position: fixed;
+  inset: 0;
+  z-index: 2500;
+  display: none;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(244,196,48,0.12) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(244,196,48,0.08) 0%, transparent 55%),
+    linear-gradient(135deg, #052918 0%, #0a4d2a 50%, #0d6b3a 100%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.timer-fs.active { display: flex; animation: fadeIn 0.4s ease; }
+
+.timer-fs-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.timer-fs-close:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: white;
+}
+
+.timer-fs-brand {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: white;
+}
+
+.timer-fs-brand-logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cvsu-gold);
+  font-weight: 900;
+  font-size: 14px;
+  border: 3px solid var(--cvsu-gold);
+}
+
+.timer-fs-brand-text h2 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+}
+
+.timer-fs-brand-text p {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cvsu-gold);
+  margin-top: 2px;
+}
+
+.timer-fs-name {
+  color: white;
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 30px;
+  text-shadow: 0 4px 25px rgba(0,0,0,0.4);
+}
+
+.timer-fs-display {
+  color: var(--cvsu-gold);
+  font-size: clamp(140px, 32vw, 480px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -10px;
+  line-height: 0.85;
+  text-shadow: 0 10px 60px rgba(0,0,0,0.5);
+}
+
+.timer-fs-display.running {
+  animation: pulseTime 1s ease-in-out infinite;
+}
+
+.timer-fs-status {
+  color: rgba(255,255,255,0.85);
+  font-size: clamp(14px, 1.5vw, 22px);
+  font-weight: 800;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-top: 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.timer-fs-status.live::before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  background: #ff4444;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseTime 1s ease-in-out infinite;
+  box-shadow: 0 0 20px rgba(255,68,68,0.6);
+}
+
+.timer-fs-controls {
+  display: flex;
+  gap: 14px;
+  margin-top: 38px;
+}
+
+.timer-fs-btn {
+  background: var(--cvsu-gold);
+  color: var(--cvsu-green-dark);
+  border: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-family: inherit;
+  transition: var(--transition);
+  box-shadow: 0 8px 25px rgba(244,196,48,0.4);
+}
+
+.timer-fs-btn:hover {
+  background: white;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(244,196,48,0.5);
+}
+
+.timer-fs-btn-running {
+  background: #ff4444;
+  color: white;
+  box-shadow: 0 8px 25px rgba(255,68,68,0.45);
+}
+
+.timer-fs-btn-running:hover {
+  background: #ff6666;
+  box-shadow: 0 12px 35px rgba(255,68,68,0.55);
+}
+
+.timer-fs-btn-reset {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.timer-fs-btn-reset:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: white;
+}
+
+@media (max-width: 600px) {
+  .timer-fs-brand { top: 14px; left: 14px; gap: 8px; }
+  .timer-fs-brand-logo { width: 42px; height: 42px; font-size: 11px; border-width: 2px; }
+  .timer-fs-brand-text h2 { font-size: 13px; }
+  .timer-fs-brand-text p { font-size: 8px; letter-spacing: 1px; }
+  .timer-fs-close { top: 14px; right: 14px; padding: 7px 14px; font-size: 11px; }
+  .timer-fs-name { margin-top: 60px; margin-bottom: 18px; font-size: 22px; }
+  .timer-fs-display { letter-spacing: -5px; }
+  .timer-fs-status { margin-top: 18px; letter-spacing: 3px; font-size: 12px; }
+  .timer-fs-controls { gap: 8px; margin-top: 24px; flex-wrap: wrap; justify-content: center; }
+  .timer-fs-btn { padding: 12px 22px; font-size: 13px; letter-spacing: 1.5px; }
+}
+
 /* ==================== TV Display Mode ==================== */
 .tv-display {
   position: fixed;
@@ -1714,6 +1904,28 @@ body {
 
 </div>
 
+<!-- ==================== Fullscreen Timer ==================== -->
+<div class="timer-fs" id="timer-fs">
+  <div class="timer-fs-brand">
+    <div class="timer-fs-brand-logo">CvSU</div>
+    <div class="timer-fs-brand-text">
+      <h2 id="timer-fs-event">U-Games 2026</h2>
+      <p>Cavite State University · Main Campus</p>
+    </div>
+  </div>
+  <button class="timer-fs-close" id="timer-fs-close">✕ Close (Esc)</button>
+
+  <div class="timer-fs-name" id="timer-fs-name">Performer</div>
+  <div class="timer-fs-display" id="timer-fs-display">0:00</div>
+  <div class="timer-fs-status" id="timer-fs-status">Ready</div>
+
+  <div class="timer-fs-controls">
+    <button class="timer-fs-btn" id="timer-fs-toggle">▶ Start</button>
+    <button class="timer-fs-btn timer-fs-btn-reset" id="timer-fs-reset">↺ Reset</button>
+    <button class="timer-fs-btn timer-fs-btn-reset" id="timer-fs-fullscreen">⛶ Fullscreen</button>
+  </div>
+</div>
+
 <!-- ==================== TV / Big Screen Display ==================== -->
 <div class="tv-display" id="tv-display">
   <div class="tv-top">
@@ -1724,7 +1936,10 @@ body {
         <p id="tv-category">Cavite State University · Main Campus</p>
       </div>
     </div>
-    <button class="tv-close" id="tv-close">✕ Close (Esc)</button>
+    <div style="display:flex; gap:10px;">
+      <button class="tv-close" id="tv-fullscreen" title="Toggle fullscreen (F)">⛶ Fullscreen</button>
+      <button class="tv-close" id="tv-close">✕ Close (Esc)</button>
+    </div>
   </div>
 
   <div class="tv-rank-row">
@@ -1988,6 +2203,7 @@ function renderPerformers() {
           <div class="timer-controls">
             <button class="timer-btn timer-btn-toggle ${p.timerRunningAt ? 'timer-btn-running' : ''}" data-tact="toggle" data-pid="${p.id}">${p.timerRunningAt ? '⏸ Stop' : '▶ Start'}</button>
             <button class="timer-btn timer-btn-reset" data-tact="reset" data-pid="${p.id}" title="Reset timer">↺</button>
+            <button class="timer-btn timer-btn-reset" data-tact="fullscreen" data-pid="${p.id}" title="Fullscreen timer">⛶</button>
           </div>
         </div>
         <div class="total-block">
@@ -2016,6 +2232,7 @@ function renderPerformers() {
         const pid = btn.dataset.pid;
         if (action === 'toggle') toggleTimer(pid);
         else if (action === 'reset') resetTimer(pid);
+        else if (action === 'fullscreen') openTimerFs(pid);
       });
     });
 
@@ -2389,6 +2606,7 @@ function toggleTimer(id) {
   saveState();
   renderAll();
   refreshTvIfOpen();
+  refreshTimerFsIfOpen();
   startTimerLoop();
 }
 
@@ -2400,6 +2618,7 @@ function resetTimer(id) {
   saveState();
   renderAll();
   refreshTvIfOpen();
+  refreshTimerFsIfOpen();
 }
 
 let timerInterval = null;
@@ -2421,8 +2640,90 @@ function startTimerLoop() {
         const tvEl = $('#tv-time-value');
         if (tvEl) tvEl.textContent = t;
       }
+      if (timerFsCurrentId === p.id) {
+        const fsEl = $('#timer-fs-display');
+        if (fsEl) fsEl.textContent = t;
+      }
     });
   }, 250);
+}
+
+// ============== Fullscreen Timer ==============
+let timerFsCurrentId = null;
+
+function openTimerFs(id) {
+  timerFsCurrentId = id;
+  renderTimerFs();
+  $('#timer-fs').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  startTimerLoop();
+}
+
+function closeTimerFs() {
+  $('#timer-fs').classList.remove('active');
+  if (!$('#tv-display').classList.contains('active')) document.body.style.overflow = '';
+  timerFsCurrentId = null;
+  if (document.fullscreenElement) document.exitFullscreen?.();
+}
+
+function renderTimerFs() {
+  if (!timerFsCurrentId) return;
+  const p = state.performers.find(x => x.id === timerFsCurrentId);
+  if (!p) { closeTimerFs(); return; }
+  ensureShape(p);
+
+  $('#timer-fs-event').textContent = state.event + (state.category ? ' · ' + state.category : '');
+  $('#timer-fs-name').textContent = p.name || 'Unnamed Performer';
+
+  const display = $('#timer-fs-display');
+  display.textContent = formatTime(getPerformerTime(p));
+  display.classList.toggle('running', !!p.timerRunningAt);
+
+  const status = $('#timer-fs-status');
+  if (p.timerRunningAt) {
+    status.textContent = 'LIVE';
+    status.classList.add('live');
+  } else {
+    status.textContent = p.timeSeconds > 0 ? 'Stopped' : 'Ready';
+    status.classList.remove('live');
+  }
+
+  const toggle = $('#timer-fs-toggle');
+  toggle.textContent = p.timerRunningAt ? '⏸ Stop' : '▶ Start';
+  toggle.classList.toggle('timer-fs-btn-running', !!p.timerRunningAt);
+}
+
+function bindTimerFs() {
+  $('#timer-fs-close').addEventListener('click', closeTimerFs);
+  $('#timer-fs-toggle').addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (timerFsCurrentId) toggleTimer(timerFsCurrentId);
+  });
+  $('#timer-fs-reset').addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    if (timerFsCurrentId) resetTimer(timerFsCurrentId);
+  });
+  $('#timer-fs-fullscreen').addEventListener('click', () => {
+    if (!document.fullscreenElement) $('#timer-fs').requestFullscreen?.();
+    else document.exitFullscreen?.();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (!$('#timer-fs').classList.contains('active')) return;
+    if (e.key === 'Escape') closeTimerFs();
+    else if (e.key === ' ') {
+      e.preventDefault();
+      if (timerFsCurrentId) toggleTimer(timerFsCurrentId);
+    } else if (e.key === 'f' || e.key === 'F') {
+      if (!document.fullscreenElement) $('#timer-fs').requestFullscreen?.();
+      else document.exitFullscreen?.();
+    } else if (e.key === 'r' || e.key === 'R') {
+      if (timerFsCurrentId) resetTimer(timerFsCurrentId);
+    }
+  });
+}
+
+function refreshTimerFsIfOpen() {
+  if ($('#timer-fs').classList.contains('active')) renderTimerFs();
 }
 
 // ============== TV Display ==============
@@ -2522,6 +2823,13 @@ function bindTvDisplay() {
   $('#tv-close').addEventListener('click', closeTvDisplay);
   $('#tv-prev').addEventListener('click', () => tvNavigate(-1));
   $('#tv-next').addEventListener('click', () => tvNavigate(1));
+  $('#tv-fullscreen').addEventListener('click', () => {
+    if (!document.fullscreenElement) {
+      $('#tv-display').requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  });
   document.addEventListener('keydown', (e) => {
     if (!$('#tv-display').classList.contains('active')) return;
     if (e.key === 'Escape') closeTvDisplay();
@@ -2545,6 +2853,7 @@ function init() {
   bindSetupForm();
   bindMainEvents();
   bindTvDisplay();
+  bindTimerFs();
 
   if (loadState()) {
     state.performers.forEach(p => {
