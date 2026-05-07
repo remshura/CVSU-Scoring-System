@@ -2108,7 +2108,10 @@ body {
         <p id="tv-category">Cavite State University · Main Campus</p>
       </div>
     </div>
-    <div style="display:flex; gap:10px;">
+    <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;">
+      <button class="tv-close" id="tv-prev" title="Previous performer (←)">← Previous</button>
+      <span class="tv-close" id="tv-nav-info" style="cursor:default; pointer-events:none; min-width:60px; text-align:center;">1 / 1</span>
+      <button class="tv-close" id="tv-next" title="Next performer (→)">Next →</button>
       <button class="tv-close" id="tv-fullscreen" title="Toggle fullscreen (F)">⛶ Fullscreen</button>
       <button class="tv-close" id="tv-close">✕ Close (Esc)</button>
     </div>
@@ -2145,11 +2148,6 @@ body {
     </div>
   </div>
 
-  <div class="tv-nav">
-    <button class="tv-nav-btn" id="tv-prev">← Previous</button>
-    <div class="tv-nav-info" id="tv-nav-info">1 / 1</div>
-    <button class="tv-nav-btn" id="tv-next">Next →</button>
-  </div>
 </div>
 
 <input type="file" id="import-file" accept=".json" style="display:none">
