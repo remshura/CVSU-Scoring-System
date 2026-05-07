@@ -1,0 +1,1710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>U-Games Scoreboard | CvSU Main Campus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cvsu-green-dark: #0a4d2a;
+  --cvsu-green: #0d6b3a;
+  --cvsu-green-light: #1a8c4d;
+  --cvsu-gold: #f4c430;
+  --cvsu-gold-dark: #c79a14;
+  --total-blue: #1976d2;
+  --total-blue-dark: #0d47a1;
+  --total-blue-light: #42a5f5;
+  --judge-red: #d32f2f;
+  --judge-red-light: #ef5350;
+  --judge-red-soft: #fff5f5;
+  --deduction-yellow: #f9a825;
+  --deduction-yellow-dark: #c87f00;
+  --deduction-yellow-soft: #fffbf0;
+  --bg: #f5f7fa;
+  --text-dark: #1a1a1a;
+  --text-muted: #6c757d;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 10px 40px rgba(0,0,0,0.18);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(244,196,48,0.10) 0%, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(244,196,48,0.06) 0%, transparent 50%),
+    linear-gradient(135deg, #073d22 0%, #0d6b3a 50%, #1a8c4d 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  color: var(--text-dark);
+  padding: 20px;
+}
+
+.container { max-width: 1400px; margin: 0 auto; }
+
+/* ==================== Setup Screen ==================== */
+.setup-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 40px);
+}
+
+.setup-card {
+  background: white;
+  padding: 45px 50px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-lg);
+  max-width: 580px;
+  width: 100%;
+  border-top: 8px solid var(--cvsu-gold);
+  position: relative;
+  overflow: hidden;
+}
+
+.setup-card::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 220px; height: 220px;
+  background: radial-gradient(circle, rgba(244,196,48,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.setup-header { text-align: center; margin-bottom: 35px; position: relative; }
+
+.cvsu-logo {
+  width: 92px;
+  height: 92px;
+  margin: 0 auto 18px;
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cvsu-gold);
+  font-weight: 900;
+  font-size: 24px;
+  border: 5px solid var(--cvsu-gold);
+  letter-spacing: -0.5px;
+  box-shadow: 0 8px 25px rgba(13, 107, 58, 0.4);
+}
+
+.setup-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--cvsu-green-dark);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.setup-subtitle {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.event-tagline {
+  background: linear-gradient(90deg, var(--cvsu-gold), #fde577);
+  color: var(--cvsu-green-dark);
+  padding: 6px 16px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-top: 12px;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+}
+
+.form-group { margin-bottom: 22px; position: relative; }
+
+.form-label {
+  display: block;
+  font-weight: 700;
+  font-size: 12px;
+  color: var(--cvsu-green-dark);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e0e0e0;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  transition: var(--transition);
+  background: #fafafa;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--cvsu-green);
+  background: white;
+  box-shadow: 0 0 0 4px rgba(13, 107, 58, 0.1);
+}
+
+.judges-selector {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 6px;
+}
+
+@media (max-width: 540px) {
+  .judges-selector { grid-template-columns: repeat(4, 1fr); }
+}
+
+.judges-option {
+  padding: 14px 0;
+  border: 2px solid #e0e0e0;
+  background: white;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--text-muted);
+}
+
+.judges-option:hover:not(.active) {
+  border-color: var(--cvsu-green);
+  background: #f0f9f4;
+  color: var(--cvsu-green-dark);
+}
+
+.judges-option.active {
+  background: linear-gradient(135deg, var(--cvsu-green), var(--cvsu-green-light));
+  color: white;
+  border-color: var(--cvsu-green);
+  box-shadow: 0 4px 15px rgba(13, 107, 58, 0.35);
+  transform: translateY(-2px);
+}
+
+.btn-start {
+  width: 100%;
+  padding: 17px;
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 10px;
+  transition: var(--transition);
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-start:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(10, 77, 42, 0.5);
+  background: linear-gradient(135deg, var(--cvsu-green), var(--cvsu-green-light));
+}
+
+/* ==================== Main Screen ==================== */
+.main-screen { display: none; }
+.main-screen.active { display: block; animation: fadeIn 0.4s ease; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.main-header {
+  background: white;
+  padding: 22px 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 25px;
+  align-items: center;
+  border-left: 6px solid var(--cvsu-gold);
+}
+
+@media (max-width: 800px) {
+  .main-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .header-actions { justify-content: center; }
+}
+
+.header-logo {
+  width: 56px;
+  height: 56px;
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cvsu-gold);
+  font-weight: 900;
+  font-size: 14px;
+  border: 3px solid var(--cvsu-gold);
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.header-info h1 {
+  color: var(--cvsu-green-dark);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.header-info p {
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 800px) {
+  .header-info p { justify-content: center; }
+}
+
+.category-pill {
+  background: var(--cvsu-gold);
+  color: var(--cvsu-green-dark);
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-weight: 700;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 11px 18px;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  color: white;
+}
+
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(13, 107, 58, 0.35); }
+
+.btn-secondary { background: #f0f4f7; color: var(--text-dark); }
+.btn-secondary:hover { background: #e2e8ed; }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--cvsu-gold-dark), var(--cvsu-gold));
+  color: var(--cvsu-green-dark);
+  font-weight: 700;
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(244,196,48,0.4); }
+
+.btn-danger { background: #fee; color: #c62828; }
+.btn-danger:hover { background: #fdd; }
+
+/* ==================== Layout ==================== */
+.dashboard {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 20px;
+  align-items: start;
+}
+
+@media (max-width: 1100px) {
+  .dashboard { grid-template-columns: 1fr; }
+  .leaderboard-panel { position: static !important; }
+}
+
+.panel {
+  background: white;
+  border-radius: var(--radius);
+  padding: 25px;
+  box-shadow: var(--shadow);
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 14px;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #f0f0f0;
+}
+
+.panel-title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--cvsu-green-dark);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-title::before {
+  content: '';
+  width: 4px;
+  height: 18px;
+  background: var(--cvsu-gold);
+  border-radius: 2px;
+}
+
+.performer-count {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+  background: #f0f4f7;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+/* ==================== Add Performer Form ==================== */
+.add-performer-form {
+  background: linear-gradient(135deg, #f0f9f4, #ffffff);
+  padding: 18px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 18px;
+  display: flex;
+  gap: 10px;
+  border: 2px dashed var(--cvsu-green-light);
+  transition: var(--transition);
+}
+
+.add-performer-form:focus-within {
+  border-color: var(--cvsu-green);
+  background: linear-gradient(135deg, #e6f5ed, #fff);
+  border-style: solid;
+}
+
+.add-performer-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 2px solid #ddd;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: white;
+}
+
+.add-performer-form input:focus {
+  outline: none;
+  border-color: var(--cvsu-green);
+}
+
+/* ==================== Performer Card ==================== */
+.performer-card {
+  background: white;
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 16px;
+  border: 2px solid #f0f0f0;
+  border-left: 5px solid var(--cvsu-green);
+  transition: var(--transition);
+  position: relative;
+}
+
+.performer-card:hover {
+  box-shadow: var(--shadow);
+}
+
+.performer-card.rank-1 { border-left-color: #ffd700; background: linear-gradient(to right, #fffaf0, #fff); }
+.performer-card.rank-2 { border-left-color: #b0b0b0; background: linear-gradient(to right, #f9f9f9, #fff); }
+.performer-card.rank-3 { border-left-color: #cd7f32; background: linear-gradient(to right, #fef8f3, #fff); }
+
+.performer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f5f5f5;
+  gap: 10px;
+}
+
+.performer-rank {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ddd;
+  color: white;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.rank-1 .performer-rank { background: linear-gradient(135deg, #ffd700, #ffaa00); box-shadow: 0 3px 12px rgba(255,215,0,0.4); }
+.rank-2 .performer-rank { background: linear-gradient(135deg, #c0c0c0, #888); box-shadow: 0 3px 12px rgba(160,160,160,0.4); }
+.rank-3 .performer-rank { background: linear-gradient(135deg, #cd7f32, #a06525); box-shadow: 0 3px 12px rgba(205,127,50,0.4); }
+
+.performer-name-wrap {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.performer-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cvsu-green-dark);
+  background: transparent;
+  border: 2px solid transparent;
+  outline: none;
+  flex: 1;
+  font-family: inherit;
+  padding: 6px 8px;
+  border-radius: 5px;
+  transition: var(--transition);
+  min-width: 0;
+}
+
+.performer-name:hover { background: #f9f9f9; border-color: #e0e0e0; }
+.performer-name:focus { border-color: var(--cvsu-green); background: white; }
+
+.performer-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--text-muted);
+  transition: var(--transition);
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-btn:hover { background: #fee; color: #c62828; }
+
+/* ==================== Score Inputs (RED) ==================== */
+.scores-section { margin-bottom: 16px; }
+
+.scores-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--judge-red);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scores-label::before {
+  content: '';
+  width: 4px;
+  height: 14px;
+  background: var(--judge-red);
+  border-radius: 2px;
+}
+
+.scores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(105px, 1fr));
+  gap: 10px;
+}
+
+.score-cell { position: relative; }
+
+.score-cell-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--judge-red);
+  margin-bottom: 5px;
+  display: block;
+  text-align: center;
+}
+
+.score-input {
+  width: 100%;
+  padding: 14px 8px;
+  border: 2px solid var(--judge-red-light);
+  border-radius: var(--radius-sm);
+  font-size: 22px;
+  font-weight: 800;
+  text-align: center;
+  font-family: inherit;
+  color: var(--judge-red);
+  background: var(--judge-red-soft);
+  transition: var(--transition);
+  -moz-appearance: textfield;
+}
+
+.score-input::-webkit-outer-spin-button,
+.score-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.score-input:focus {
+  outline: none;
+  border-color: var(--judge-red);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.18);
+}
+
+.score-input::placeholder { color: var(--judge-red-light); opacity: 0.45; }
+
+.score-cell.dropped-high .score-input {
+  background: #fff8e1;
+  opacity: 0.7;
+  text-decoration: line-through;
+  border-color: var(--cvsu-gold-dark);
+  color: #8a6914;
+}
+
+.score-cell.dropped-low .score-input {
+  background: #efefef;
+  opacity: 0.7;
+  text-decoration: line-through;
+  border-color: #999;
+  color: #555;
+}
+
+.dropped-marker {
+  position: absolute;
+  top: -8px;
+  right: 4px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: white;
+  display: none;
+  z-index: 2;
+}
+
+.dropped-marker.high { background: var(--cvsu-gold-dark); }
+.dropped-marker.low  { background: #555; }
+
+.score-cell.dropped-high .dropped-marker.high { display: inline-block; }
+.score-cell.dropped-low  .dropped-marker.low  { display: inline-block; }
+
+/* ==================== Deduction (YELLOW) & Total (BLUE) ==================== */
+.bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+@media (max-width: 600px) {
+  .bottom-row { grid-template-columns: 1fr; }
+}
+
+.deduction-block {
+  background: linear-gradient(135deg, var(--deduction-yellow-soft), #fff8e1);
+  border: 2px solid var(--deduction-yellow);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+}
+
+.deduction-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--deduction-yellow-dark);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deduction-label::before {
+  content: '−';
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.deduction-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 2px solid var(--deduction-yellow);
+  border-radius: 6px;
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  color: var(--deduction-yellow-dark);
+  background: white;
+  font-family: inherit;
+  -moz-appearance: textfield;
+}
+
+.deduction-input::-webkit-outer-spin-button,
+.deduction-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.deduction-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(249, 168, 37, 0.25);
+}
+
+.total-block {
+  background: linear-gradient(135deg, var(--total-blue-dark), var(--total-blue));
+  color: white;
+  border-radius: var(--radius-sm);
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.35);
+  position: relative;
+  overflow: hidden;
+}
+
+.total-block::before {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 100px; height: 100px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 50%;
+}
+
+.total-block-info { position: relative; z-index: 1; }
+
+.total-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: 0.95;
+  margin-bottom: 2px;
+}
+
+.total-formula {
+  font-size: 9.5px;
+  opacity: 0.78;
+  letter-spacing: 0.3px;
+  font-weight: 500;
+}
+
+.total-value {
+  font-size: 38px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+/* ==================== Leaderboard ==================== */
+.leaderboard-panel {
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.leaderboard-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.leader-item {
+  display: grid;
+  grid-template-columns: 38px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  background: #fafafa;
+  border-left: 4px solid #ddd;
+  transition: var(--transition);
+}
+
+.leader-item:hover { background: #f0f0f0; transform: translateX(2px); }
+
+.leader-item.rank-1 { background: linear-gradient(135deg, #fff8e1, #fffce7); border-left-color: #ffd700; }
+.leader-item.rank-2 { background: linear-gradient(135deg, #f5f5f5, #fafafa); border-left-color: #c0c0c0; }
+.leader-item.rank-3 { background: linear-gradient(135deg, #fff3e0, #fff8ee); border-left-color: #cd7f32; }
+
+.leader-rank {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #ccc;
+  color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+.rank-1 > .leader-rank { background: linear-gradient(135deg, #ffd700, #ffaa00); }
+.rank-2 > .leader-rank { background: linear-gradient(135deg, #c0c0c0, #888); }
+.rank-3 > .leader-rank { background: linear-gradient(135deg, #cd7f32, #a06525); }
+
+.leader-info { min-width: 0; }
+.leader-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.leader-meta { font-size: 10px; color: var(--text-muted); margin-top: 1px; }
+
+.leader-score {
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--total-blue);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==================== Empty States ==================== */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: var(--text-muted);
+}
+
+.empty-state-icon { font-size: 56px; margin-bottom: 12px; opacity: 0.3; }
+.empty-state-text { font-weight: 600; font-size: 15px; color: var(--text-muted); }
+.empty-state-hint { font-size: 13px; margin-top: 6px; opacity: 0.7; }
+
+/* ==================== Toast ==================== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 14px 24px;
+  background: var(--cvsu-green-dark);
+  color: white;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  font-weight: 600;
+  font-size: 14px;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 90vw;
+}
+
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.error { background: #c62828; }
+
+/* ==================== Modal ==================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
+}
+
+.modal-backdrop.active { display: flex; }
+
+.modal {
+  background: white;
+  padding: 30px;
+  border-radius: 16px;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.modal h3 { color: var(--cvsu-green-dark); margin-bottom: 12px; font-size: 20px; }
+.modal p { color: var(--text-muted); margin-bottom: 20px; line-height: 1.5; font-size: 14px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ==================== Footer ==================== */
+.footer {
+  text-align: center;
+  color: rgba(255,255,255,0.6);
+  font-size: 11px;
+  margin-top: 25px;
+  padding: 15px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* ==================== Tablet & Phone Responsive ==================== */
+@media (max-width: 768px) {
+  body { padding: 12px; }
+
+  .setup-card { padding: 35px 25px; border-radius: 18px; }
+  .setup-title { font-size: 24px; }
+  .cvsu-logo { width: 78px; height: 78px; font-size: 21px; }
+
+  .main-header { padding: 18px 20px; gap: 15px; }
+  .header-info h1 { font-size: 20px; }
+  .header-info p { font-size: 10px; letter-spacing: 1px; }
+
+  .panel { padding: 18px; border-radius: 12px; }
+  .panel-title { font-size: 13px; }
+
+  .add-performer-form { padding: 14px; flex-direction: column; gap: 8px; }
+  .add-performer-form input { padding: 12px 14px; }
+  .add-performer-form .btn { justify-content: center; padding: 12px; }
+
+  .performer-card { padding: 16px; }
+  .performer-name { font-size: 16px; padding: 5px 6px; }
+  .performer-rank { width: 32px; height: 32px; font-size: 13px; margin-right: 10px; }
+
+  .scores-grid {
+    grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+    gap: 8px;
+  }
+  .score-input { font-size: 19px; padding: 12px 6px; }
+  .score-cell-label { font-size: 9px; }
+
+  .total-value { font-size: 32px; }
+  .total-block { padding: 12px 16px; }
+  .total-label { font-size: 10px; }
+  .total-formula { font-size: 9px; }
+
+  .deduction-input { font-size: 18px; }
+  .deduction-block { padding: 10px 14px; }
+
+  .leader-item { padding: 10px 12px; gap: 10px; }
+  .leader-score { font-size: 19px; }
+  .leader-name { font-size: 13px; }
+
+  .btn { padding: 10px 14px; font-size: 12px; }
+
+  .toast { bottom: 16px; right: 16px; left: 16px; font-size: 13px; padding: 12px 18px; }
+
+  .modal { padding: 22px 20px; }
+}
+
+@media (max-width: 480px) {
+  body { padding: 8px; }
+
+  .setup-card { padding: 28px 20px; }
+  .setup-title { font-size: 21px; }
+  .setup-subtitle { font-size: 10px; letter-spacing: 1.2px; }
+  .cvsu-logo { width: 70px; height: 70px; font-size: 18px; }
+  .form-input { padding: 12px 14px; font-size: 14px; }
+  .judges-option { padding: 12px 0; font-size: 14px; }
+  .btn-start { padding: 14px; font-size: 13px; letter-spacing: 1.2px; }
+
+  .main-header {
+    padding: 14px;
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 10px;
+  }
+  .header-info p { justify-content: center; flex-wrap: wrap; }
+  .header-actions {
+    justify-content: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .header-actions .btn {
+    padding: 9px 8px;
+    font-size: 11px;
+    justify-content: center;
+  }
+
+  .performer-card { padding: 14px; }
+  .performer-header { gap: 6px; padding-bottom: 12px; margin-bottom: 14px; }
+  .performer-name { font-size: 15px; }
+
+  .scores-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .score-input { font-size: 17px; padding: 10px 4px; }
+
+  .bottom-row { gap: 10px; }
+  .total-value { font-size: 28px; }
+  .total-block { padding: 11px 14px; }
+
+  .leaderboard-panel { padding: 16px; }
+  .leader-item {
+    grid-template-columns: 32px 1fr auto;
+    gap: 8px;
+    padding: 10px;
+  }
+  .leader-rank { width: 28px; height: 28px; font-size: 12px; }
+  .leader-score { font-size: 17px; }
+  .leader-name { font-size: 12px; }
+  .leader-meta { font-size: 9px; }
+
+  .footer { font-size: 10px; padding: 10px; }
+}
+
+@media (max-width: 360px) {
+  .scores-grid { grid-template-columns: repeat(2, 1fr); }
+  .header-actions { grid-template-columns: repeat(2, 1fr); }
+  .setup-card { padding: 24px 16px; }
+}
+
+/* Touch device improvements */
+@media (hover: none) and (pointer: coarse) {
+  .icon-btn { width: 38px; height: 38px; }
+  .score-input, .deduction-input { font-size: 18px; }
+  input, button { -webkit-tap-highlight-color: rgba(13, 107, 58, 0.15); }
+  /* Prevent iOS from zooming on input focus */
+  input[type="text"], input[type="number"] { font-size: 16px; }
+  .score-input, .deduction-input { font-size: 18px; }
+}
+
+/* ==================== Print ==================== */
+@media print {
+  body { background: white !important; padding: 0; }
+  .header-actions, .add-performer-form, .icon-btn, .performer-actions { display: none !important; }
+  .leaderboard-panel { position: static; max-height: none; }
+  .panel, .main-header, .performer-card { box-shadow: none; }
+  .total-block { box-shadow: none; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .footer { color: #999; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ==================== Setup Screen ==================== -->
+  <section id="setup-screen" class="setup-screen">
+    <div class="setup-card">
+      <div class="setup-header">
+        <div class="cvsu-logo">CvSU</div>
+        <div class="setup-title">U-Games Scoreboard</div>
+        <div class="setup-subtitle">Cavite State University · Main Campus</div>
+        <div class="event-tagline">★ Official Scoring System ★</div>
+      </div>
+
+      <form id="setup-form">
+        <div class="form-group">
+          <label class="form-label" for="event-name">Event Name</label>
+          <input type="text" class="form-input" id="event-name" placeholder="e.g. U-Games 2026" value="U-Games 2026" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="event-category">Category / Performance</label>
+          <input type="text" class="form-input" id="event-category" placeholder="e.g. Cheer Dance, Streetdance, Vocal Solo">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Number of Judges</label>
+          <div class="judges-selector" id="judges-selector">
+            <button type="button" class="judges-option" data-n="3">3</button>
+            <button type="button" class="judges-option" data-n="4">4</button>
+            <button type="button" class="judges-option active" data-n="5">5</button>
+            <button type="button" class="judges-option" data-n="6">6</button>
+            <button type="button" class="judges-option" data-n="7">7</button>
+            <button type="button" class="judges-option" data-n="8">8</button>
+            <button type="button" class="judges-option" data-n="9">9</button>
+            <button type="button" class="judges-option" data-n="10">10</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="max-score">Maximum Score Per Judge</label>
+          <input type="number" class="form-input" id="max-score" placeholder="10" value="10" min="0.01" step="0.01" max="10000">
+        </div>
+
+        <button type="submit" class="btn-start">Start Scoring →</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ==================== Main Screen ==================== -->
+  <section id="main-screen" class="main-screen">
+    <div class="main-header">
+      <div class="header-logo">CvSU</div>
+      <div class="header-info">
+        <h1 id="display-event">U-Games 2026</h1>
+        <p>
+          <span id="display-category">Scoreboard</span>
+          <span class="category-pill" id="display-judges">5 Judges</span>
+        </p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="btn-print" title="Print scoreboard">🖨 Print</button>
+        <button class="btn btn-gold" id="btn-export" title="Download backup">⬇ Export</button>
+        <button class="btn btn-secondary" id="btn-import" title="Restore backup">⬆ Import</button>
+        <button class="btn btn-secondary" id="btn-settings" title="Change event settings">⚙ Settings</button>
+        <button class="btn btn-danger" id="btn-reset" title="Clear all performers">🗑 Reset</button>
+      </div>
+    </div>
+
+    <div class="dashboard">
+      <!-- Performers Panel -->
+      <div class="panel performers-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Performers</h2>
+          <span class="performer-count" id="performer-count">0 performers</span>
+        </div>
+
+        <form class="add-performer-form" id="add-performer-form">
+          <input type="text" id="new-performer-name" placeholder="Enter performer / team name…" autocomplete="off" maxlength="80">
+          <button type="submit" class="btn btn-primary">+ Add Performer</button>
+        </form>
+
+        <div id="performers-list"></div>
+      </div>
+
+      <!-- Leaderboard Panel -->
+      <div class="panel leaderboard-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">🏆 Leaderboard</h2>
+        </div>
+        <div id="leaderboard-list" class="leaderboard-list"></div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Auto-saves to your browser • Cavite State University - Main Campus
+    </div>
+  </section>
+
+</div>
+
+<input type="file" id="import-file" accept=".json" style="display:none">
+
+<div class="toast" id="toast"></div>
+
+<div class="modal-backdrop" id="modal">
+  <div class="modal">
+    <h3 id="modal-title">Confirm</h3>
+    <p id="modal-text">Are you sure?</p>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" id="modal-cancel">Cancel</button>
+      <button class="btn btn-danger" id="modal-confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+const STORAGE_KEY = 'cvsu_ugames_scoreboard_v4';
+
+const state = {
+  event: 'U-Games 2026',
+  category: '',
+  numJudges: 5,
+  maxScore: 10,
+  performers: []
+};
+
+const $ = (sel, parent = document) => parent.querySelector(sel);
+const $$ = (sel, parent = document) => Array.from(parent.querySelectorAll(sel));
+
+function uid() {
+  return 'p_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+}
+
+function escapeHtml(s) {
+  if (s === undefined || s === null) return '';
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function formatNumber(n) {
+  if (n === undefined || n === null || isNaN(n)) return '0';
+  if (Number.isInteger(n)) return String(n);
+  return Number(n.toFixed(2)).toString();
+}
+
+// ============== Storage ==============
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+  catch (e) { console.warn('Save failed:', e); }
+}
+
+function loadState() {
+  try {
+    const data = localStorage.getItem(STORAGE_KEY);
+    if (!data) return false;
+    const parsed = JSON.parse(data);
+    if (!parsed || typeof parsed !== 'object') return false;
+    Object.assign(state, parsed);
+    if (!Array.isArray(state.performers)) state.performers = [];
+    return true;
+  } catch (e) { console.warn('Load failed:', e); return false; }
+}
+
+// ============== Calculation ==============
+function calculate(performer) {
+  const numJ = state.numJudges;
+  const scoresArr = (performer.scores || []).slice(0, numJ);
+
+  const indexed = scoresArr.map((s, idx) => ({
+    idx,
+    val: parseFloat(s),
+    has: s !== '' && s !== null && s !== undefined && !isNaN(parseFloat(s))
+  })).filter(s => s.has);
+
+  const deduction = parseFloat(performer.deduction);
+  const ded = isNaN(deduction) ? 0 : deduction;
+
+  if (indexed.length === 0) {
+    return { final: 0, middleSum: 0, rawSum: 0, droppedHighIdx: -1, droppedLowIdx: -1, filledCount: 0, complete: false, deduction: ded };
+  }
+
+  const sorted = [...indexed].sort((a, b) => a.val - b.val);
+  const droppedLow = sorted[0];
+  const droppedHigh = sorted[sorted.length - 1];
+
+  let middleSum = 0;
+  let droppedHighIdx = -1, droppedLowIdx = -1;
+
+  if (indexed.length >= 3) {
+    middleSum = sorted.slice(1, -1).reduce((s, item) => s + item.val, 0);
+    droppedHighIdx = droppedHigh.idx;
+    droppedLowIdx = droppedLow.idx;
+  } else {
+    middleSum = 0;
+  }
+
+  const final = middleSum - ded;
+  const complete = indexed.length === numJ;
+
+  return {
+    final,
+    middleSum,
+    rawSum: indexed.reduce((s, item) => s + item.val, 0),
+    droppedHighIdx,
+    droppedLowIdx,
+    filledCount: indexed.length,
+    complete,
+    deduction: ded
+  };
+}
+
+function ensureShape(p) {
+  if (!Array.isArray(p.scores)) p.scores = [];
+  while (p.scores.length < state.numJudges) p.scores.push('');
+  if (p.scores.length > state.numJudges) p.scores = p.scores.slice(0, state.numJudges);
+  if (p.deduction === undefined || p.deduction === null) p.deduction = '';
+  if (typeof p.name !== 'string') p.name = '';
+}
+
+// ============== Rendering ==============
+function getRankMap() {
+  const ranked = state.performers.map(p => ({ p, calc: calculate(p) }));
+  const scored = ranked.filter(r => r.calc.filledCount > 0)
+                       .sort((a, b) => b.calc.final - a.calc.final);
+  const map = new Map();
+  let prev = null, rank = 0;
+  scored.forEach((item, i) => {
+    if (prev === null || item.calc.final < prev) {
+      rank = i + 1;
+      prev = item.calc.final;
+    }
+    map.set(item.p.id, rank);
+  });
+  return map;
+}
+
+function renderPerformers() {
+  const list = $('#performers-list');
+  list.innerHTML = '';
+
+  $('#performer-count').textContent = state.performers.length === 1
+    ? '1 performer' : `${state.performers.length} performers`;
+
+  if (state.performers.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🎤</div>
+        <div class="empty-state-text">No performers yet</div>
+        <div class="empty-state-hint">Add a performer above to start scoring</div>
+      </div>`;
+    return;
+  }
+
+  const rankMap = getRankMap();
+
+  state.performers.forEach((p) => {
+    ensureShape(p);
+    const calc = calculate(p);
+    const rank = rankMap.get(p.id);
+
+    const card = document.createElement('div');
+    card.className = 'performer-card';
+    if (rank === 1) card.classList.add('rank-1');
+    else if (rank === 2) card.classList.add('rank-2');
+    else if (rank === 3) card.classList.add('rank-3');
+
+    let scoresHTML = '';
+    for (let i = 0; i < state.numJudges; i++) {
+      const isHigh = i === calc.droppedHighIdx;
+      const isLow  = i === calc.droppedLowIdx;
+      let cls = 'score-cell';
+      if (isHigh) cls += ' dropped-high';
+      if (isLow)  cls += ' dropped-low';
+
+      const val = (p.scores[i] !== undefined && p.scores[i] !== null) ? p.scores[i] : '';
+      scoresHTML += `
+        <div class="${cls}">
+          <span class="score-cell-label">Judge ${i + 1}</span>
+          <input type="number" class="score-input" data-pid="${p.id}" data-judge="${i}"
+                 value="${escapeHtml(val)}" min="0" max="${state.maxScore}" step="0.01" placeholder="—" inputmode="decimal">
+          <span class="dropped-marker high">High</span>
+          <span class="dropped-marker low">Low</span>
+        </div>`;
+    }
+
+    const middleCount = Math.max(0, state.numJudges - 2);
+    const formulaText = calc.filledCount >= 3
+      ? `Mid ${middleCount} (${formatNumber(calc.middleSum)}) − Ded (${formatNumber(calc.deduction)})`
+      : `Enter ${state.numJudges - calc.filledCount} more score${state.numJudges - calc.filledCount === 1 ? '' : 's'}`;
+
+    card.innerHTML = `
+      <div class="performer-header">
+        <div class="performer-name-wrap">
+          <div class="performer-rank">${rank || '—'}</div>
+          <input type="text" class="performer-name" data-pid="${p.id}"
+                 value="${escapeHtml(p.name)}" placeholder="Performer name" maxlength="80">
+        </div>
+        <div class="performer-actions">
+          <button class="icon-btn" data-action="delete" data-pid="${p.id}" title="Delete performer" aria-label="Delete">🗑</button>
+        </div>
+      </div>
+
+      <div class="scores-section">
+        <div class="scores-label">Judges' Scores</div>
+        <div class="scores-grid">${scoresHTML}</div>
+      </div>
+
+      <div class="bottom-row">
+        <div class="deduction-block">
+          <div class="deduction-label">Deduction</div>
+          <input type="number" class="deduction-input" data-pid="${p.id}"
+                 value="${escapeHtml(p.deduction)}" min="0" step="0.01" placeholder="0" inputmode="decimal">
+        </div>
+        <div class="total-block">
+          <div class="total-block-info">
+            <div class="total-label">${calc.complete ? 'Total Score' : `Partial · ${calc.filledCount}/${state.numJudges} Judges`}</div>
+            <div class="total-formula">${formulaText}</div>
+          </div>
+          <div class="total-value">${formatNumber(calc.final)}</div>
+        </div>
+      </div>`;
+
+    list.appendChild(card);
+  });
+}
+
+function renderLeaderboard() {
+  const list = $('#leaderboard-list');
+  list.innerHTML = '';
+
+  if (state.performers.length === 0) {
+    list.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">🏆</div>
+        <div class="empty-state-text">Standings will appear here</div>
+      </div>`;
+    return;
+  }
+
+  const ranked = state.performers.map(p => ({ p, calc: calculate(p) }))
+    .sort((a, b) => {
+      if (a.calc.filledCount === 0 && b.calc.filledCount === 0) return 0;
+      if (a.calc.filledCount === 0) return 1;
+      if (b.calc.filledCount === 0) return -1;
+      return b.calc.final - a.calc.final;
+    });
+
+  ranked.forEach((item, i) => {
+    const div = document.createElement('div');
+    div.className = 'leader-item';
+    let displayRank;
+    if (item.calc.filledCount === 0) {
+      displayRank = '—';
+    } else {
+      displayRank = i + 1;
+      if (i === 0) div.classList.add('rank-1');
+      else if (i === 1) div.classList.add('rank-2');
+      else if (i === 2) div.classList.add('rank-3');
+    }
+    const medal = (item.calc.filledCount > 0 && i === 0) ? '🥇 '
+                : (item.calc.filledCount > 0 && i === 1) ? '🥈 '
+                : (item.calc.filledCount > 0 && i === 2) ? '🥉 '
+                : '';
+    const meta = item.calc.filledCount === 0 ? 'Awaiting scores'
+               : item.calc.complete ? '✓ Complete'
+               : `${item.calc.filledCount}/${state.numJudges} judges`;
+
+    div.innerHTML = `
+      <div class="leader-rank">${displayRank}</div>
+      <div class="leader-info">
+        <div class="leader-name">${medal}${escapeHtml(item.p.name) || 'Unnamed'}</div>
+        <div class="leader-meta">${meta}</div>
+      </div>
+      <div class="leader-score">${formatNumber(item.calc.final)}</div>`;
+    list.appendChild(div);
+  });
+}
+
+function renderHeader() {
+  $('#display-event').textContent = state.event;
+  $('#display-category').textContent = state.category || 'Scoreboard';
+  $('#display-judges').textContent = `${state.numJudges} Judges`;
+}
+
+function renderAll() {
+  renderHeader();
+  renderPerformers();
+  renderLeaderboard();
+}
+
+// ============== Live (lightweight) update without re-render ==============
+function updateCardLive(id) {
+  const p = state.performers.find(x => x.id === id);
+  if (!p) return;
+  const calc = calculate(p);
+  const inputs = $$(`.score-input[data-pid="${id}"]`);
+  if (inputs.length === 0) return;
+  const card = inputs[0].closest('.performer-card');
+  if (!card) return;
+
+  const tv = card.querySelector('.total-value');
+  const tl = card.querySelector('.total-label');
+  const tf = card.querySelector('.total-formula');
+  if (tv) tv.textContent = formatNumber(calc.final);
+  if (tl) tl.textContent = calc.complete ? 'Total Score' : `Partial · ${calc.filledCount}/${state.numJudges} Judges`;
+  if (tf) {
+    const middleCount = Math.max(0, state.numJudges - 2);
+    tf.textContent = calc.filledCount >= 3
+      ? `Mid ${middleCount} (${formatNumber(calc.middleSum)}) − Ded (${formatNumber(calc.deduction)})`
+      : `Enter ${state.numJudges - calc.filledCount} more score${state.numJudges - calc.filledCount === 1 ? '' : 's'}`;
+  }
+}
+
+// ============== Actions ==============
+function addPerformer(name) {
+  const trimmed = (name || '').trim();
+  if (!trimmed) { showToast('Please enter a performer name', 'error'); return; }
+  state.performers.push({
+    id: uid(),
+    name: trimmed,
+    scores: Array(state.numJudges).fill(''),
+    deduction: ''
+  });
+  saveState();
+  renderAll();
+  showToast(`Added: ${trimmed}`);
+}
+
+function deletePerformer(id) {
+  const p = state.performers.find(x => x.id === id);
+  if (!p) return;
+  showModal({
+    title: 'Delete Performer?',
+    text: `This will permanently delete "${p.name || 'Unnamed'}" and their scores.`,
+    confirmText: 'Delete',
+    onConfirm: () => {
+      state.performers = state.performers.filter(x => x.id !== id);
+      saveState(); renderAll();
+      showToast(`Deleted: ${p.name || 'Unnamed'}`);
+    }
+  });
+}
+
+function clampScore(value) {
+  if (value === '' || value === null) return '';
+  const v = parseFloat(value);
+  if (isNaN(v)) return value;
+  if (v > state.maxScore) return state.maxScore;
+  if (v < 0) return 0;
+  return value;
+}
+
+function clampDeduction(value) {
+  if (value === '' || value === null) return '';
+  const v = parseFloat(value);
+  if (isNaN(v)) return value;
+  if (v < 0) return 0;
+  return value;
+}
+
+function exportData() {
+  const safe = (s) => (s || 'event').replace(/[^a-z0-9_-]/gi, '_').replace(/_+/g, '_');
+  const filename = `${safe(state.event)}_${safe(state.category)}_${new Date().toISOString().slice(0,10)}.json`;
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename; a.click();
+  URL.revokeObjectURL(url);
+  showToast('Exported: ' + filename);
+}
+
+function importData(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      if (!parsed || !Array.isArray(parsed.performers)) throw new Error('Invalid file format');
+      Object.assign(state, parsed);
+      if (!Array.isArray(state.performers)) state.performers = [];
+      state.performers.forEach(ensureShape);
+      saveState();
+      renderAll();
+      showToast('Imported successfully');
+    } catch (err) {
+      showToast('Import failed: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function resetAll() {
+  showModal({
+    title: 'Reset All Performers?',
+    text: 'This will delete all performers and scores. Event settings (name, judges count) will be kept. This cannot be undone.',
+    confirmText: 'Reset',
+    onConfirm: () => {
+      state.performers = [];
+      saveState(); renderAll();
+      showToast('All performers cleared');
+    }
+  });
+}
+
+function backToSetup() {
+  $('#main-screen').classList.remove('active');
+  $('#setup-screen').style.display = 'flex';
+  $('#event-name').value = state.event;
+  $('#event-category').value = state.category;
+  $('#max-score').value = state.maxScore;
+  $$('#judges-selector .judges-option').forEach(b => {
+    b.classList.toggle('active', Number(b.dataset.n) === state.numJudges);
+  });
+}
+
+// ============== Toast / Modal ==============
+let toastTimer = null;
+function showToast(msg, type = 'success') {
+  const t = $('#toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type === 'error' ? ' error' : '');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.classList.remove('show'); }, 2500);
+}
+
+let modalConfirmHandler = null;
+function showModal({ title, text, confirmText = 'Confirm', onConfirm }) {
+  $('#modal-title').textContent = title;
+  $('#modal-text').textContent = text;
+  $('#modal-confirm').textContent = confirmText;
+  modalConfirmHandler = onConfirm;
+  $('#modal').classList.add('active');
+}
+function closeModal() {
+  $('#modal').classList.remove('active');
+  modalConfirmHandler = null;
+}
+
+// ============== Wire Up ==============
+function bindSetupForm() {
+  $$('#judges-selector .judges-option').forEach(btn => {
+    btn.addEventListener('click', () => {
+      $$('#judges-selector .judges-option').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+
+  $('#setup-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    state.event = $('#event-name').value.trim() || 'U-Games';
+    state.category = $('#event-category').value.trim();
+    const maxS = parseFloat($('#max-score').value);
+    state.maxScore = (isNaN(maxS) || maxS <= 0) ? 10 : maxS;
+    const activeJudge = $('#judges-selector .judges-option.active');
+    state.numJudges = activeJudge ? Number(activeJudge.dataset.n) : 5;
+
+    state.performers.forEach(ensureShape);
+    saveState();
+    showMain();
+  });
+}
+
+function showMain() {
+  $('#setup-screen').style.display = 'none';
+  $('#main-screen').classList.add('active');
+  renderAll();
+}
+
+function bindMainEvents() {
+  $('#add-performer-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = $('#new-performer-name');
+    addPerformer(input.value);
+    input.value = '';
+    input.focus();
+  });
+
+  // Live update on input (without full re-render to avoid losing focus)
+  $('#performers-list').addEventListener('input', (e) => {
+    const t = e.target;
+    const pid = t.dataset.pid;
+    if (!pid) return;
+    const p = state.performers.find(x => x.id === pid);
+    if (!p) return;
+
+    if (t.classList.contains('score-input')) {
+      const judgeIdx = parseInt(t.dataset.judge, 10);
+      const clamped = clampScore(t.value);
+      if (clamped !== t.value) t.value = clamped;
+      ensureShape(p);
+      p.scores[judgeIdx] = t.value;
+      saveState();
+      updateCardLive(pid);
+      renderLeaderboard();
+    } else if (t.classList.contains('deduction-input')) {
+      const clamped = clampDeduction(t.value);
+      if (clamped !== t.value) t.value = clamped;
+      p.deduction = t.value;
+      saveState();
+      updateCardLive(pid);
+      renderLeaderboard();
+    } else if (t.classList.contains('performer-name')) {
+      p.name = t.value;
+      saveState();
+      renderLeaderboard();
+    }
+  });
+
+  // On blur of any score/deduction, do a full re-render so dropped indicators and ranks settle
+  $('#performers-list').addEventListener('blur', (e) => {
+    const t = e.target;
+    if (t.classList.contains('score-input') || t.classList.contains('deduction-input')) {
+      renderAll();
+    }
+  }, true);
+
+  $('#performers-list').addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const pid = btn.dataset.pid;
+    if (btn.dataset.action === 'delete') deletePerformer(pid);
+  });
+
+  // Enter advances to next score input (quality-of-life)
+  $('#performers-list').addEventListener('keydown', (e) => {
+    if (e.key !== 'Enter') return;
+    if (!(e.target.classList.contains('score-input') || e.target.classList.contains('deduction-input'))) return;
+    e.preventDefault();
+    const all = $$('.score-input, .deduction-input');
+    const i = all.indexOf(e.target);
+    if (i >= 0 && i < all.length - 1) {
+      all[i + 1].focus();
+      try { all[i + 1].select(); } catch (_) {}
+    } else {
+      e.target.blur();
+    }
+  });
+
+  $('#btn-print').addEventListener('click', () => window.print());
+  $('#btn-export').addEventListener('click', exportData);
+  $('#btn-import').addEventListener('click', () => $('#import-file').click());
+  $('#import-file').addEventListener('change', (e) => {
+    if (e.target.files && e.target.files[0]) importData(e.target.files[0]);
+    e.target.value = '';
+  });
+  $('#btn-settings').addEventListener('click', backToSetup);
+  $('#btn-reset').addEventListener('click', resetAll);
+
+  $('#modal-cancel').addEventListener('click', closeModal);
+  $('#modal-confirm').addEventListener('click', () => {
+    const fn = modalConfirmHandler;
+    closeModal();
+    if (fn) fn();
+  });
+  $('#modal').addEventListener('click', (e) => {
+    if (e.target.id === 'modal') closeModal();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && $('#modal').classList.contains('active')) closeModal();
+  });
+}
+
+// ============== Init ==============
+function init() {
+  bindSetupForm();
+  bindMainEvents();
+
+  if (loadState()) {
+    state.performers.forEach(ensureShape);
+    $('#event-name').value = state.event;
+    $('#event-category').value = state.category;
+    $('#max-score').value = state.maxScore;
+    $$('#judges-selector .judges-option').forEach(b => {
+      b.classList.toggle('active', Number(b.dataset.n) === state.numJudges);
+    });
+    showMain();
+  }
+}
+
+init();
+</script>
+</body>
+</html>
