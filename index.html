@@ -526,6 +526,7 @@ body {
 }
 
 .icon-btn:hover { background: #fee; color: #c62828; }
+.icon-btn.icon-btn-display:hover { background: #e3f2fd; color: var(--total-blue); }
 
 /* ==================== Score Inputs (RED) ==================== */
 .scores-section { margin-bottom: 16px; }
@@ -890,6 +891,430 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ==================== TV Display Mode ==================== */
+.tv-display {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: none;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(244,196,48,0.15) 0%, transparent 45%),
+    radial-gradient(circle at 85% 75%, rgba(244,196,48,0.10) 0%, transparent 50%),
+    linear-gradient(135deg, #052918 0%, #0a4d2a 50%, #0d6b3a 100%);
+  flex-direction: column;
+  padding: 40px 50px;
+  overflow: hidden;
+}
+
+.tv-display.active { display: flex; animation: fadeIn 0.4s ease; }
+
+.tv-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 30px;
+  flex-shrink: 0;
+}
+
+.tv-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.tv-brand-logo {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--cvsu-green-dark), var(--cvsu-green));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cvsu-gold);
+  font-weight: 900;
+  font-size: 22px;
+  border: 4px solid var(--cvsu-gold);
+  flex-shrink: 0;
+}
+
+.tv-brand-text h2 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  line-height: 1.1;
+}
+
+.tv-brand-text p {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--cvsu-gold);
+  margin-top: 4px;
+}
+
+.tv-close {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 1px;
+  transition: var(--transition);
+}
+
+.tv-close:hover {
+  background: rgba(255,255,255,0.25);
+  border-color: white;
+  transform: scale(1.05);
+}
+
+.tv-performer-name {
+  text-align: center;
+  color: white;
+  font-size: 56px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+  text-shadow: 0 4px 25px rgba(0,0,0,0.4);
+  flex-shrink: 0;
+}
+
+.tv-rank-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--cvsu-gold), #fde577);
+  color: var(--cvsu-green-dark);
+  padding: 6px 22px;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  box-shadow: 0 6px 25px rgba(244,196,48,0.4);
+}
+
+.tv-rank-row {
+  display: flex;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tv-main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1.7fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 24px;
+  align-items: stretch;
+  min-height: 0;
+}
+
+.tv-main > .tv-total { grid-column: 1; grid-row: 1; }
+.tv-main > .tv-judges { grid-column: 2; grid-row: 1; }
+.tv-main > .tv-side { grid-column: 1 / -1; grid-row: 2; }
+
+/* Judge scores column (RED) */
+.tv-judges {
+  background: linear-gradient(135deg, #c62828, var(--judge-red));
+  border-radius: 24px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 15px 50px rgba(211, 47, 47, 0.4);
+  border: 4px solid rgba(255,255,255,0.15);
+}
+
+.tv-section-label {
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: rgba(255,255,255,0.95);
+  text-align: center;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid rgba(255,255,255,0.25);
+  flex-shrink: 0;
+}
+
+.tv-judges-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  flex: 1;
+  gap: 6px;
+}
+
+.tv-judge-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 14px;
+  padding: 8px 4px;
+  border-bottom: 1px dashed rgba(255,255,255,0.18);
+  transition: var(--transition);
+}
+
+.tv-judge-row:last-child { border-bottom: none; }
+
+.tv-judge-row.dropped { opacity: 0.45; }
+
+.tv-judge-label {
+  color: rgba(255,255,255,0.75);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  min-width: 70px;
+}
+
+.tv-judge-value {
+  color: white;
+  font-size: 42px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -1px;
+  text-align: right;
+  line-height: 1;
+}
+
+.tv-judge-row.dropped .tv-judge-value { text-decoration: line-through; }
+
+.tv-judge-tag {
+  display: inline-block;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+  text-decoration: none !important;
+}
+
+/* Total column (BLUE) - The big focus */
+.tv-total {
+  background: linear-gradient(135deg, var(--total-blue-dark), var(--total-blue));
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(13, 71, 161, 0.5);
+  border: 4px solid rgba(255,255,255,0.15);
+}
+
+.tv-total::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 320px; height: 320px;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.tv-total::after {
+  content: '';
+  position: absolute;
+  bottom: -100px; left: -100px;
+  width: 280px; height: 280px;
+  background: radial-gradient(circle, rgba(244,196,48,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.tv-total-label {
+  color: rgba(255,255,255,0.92);
+  font-size: 16px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.tv-total-value {
+  color: white;
+  font-size: clamp(120px, 22vw, 280px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -6px;
+  line-height: 0.9;
+  text-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  position: relative;
+  z-index: 1;
+}
+
+.tv-total-formula {
+  color: rgba(255,255,255,0.75);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+/* Deduction column (YELLOW) */
+.tv-side {
+  display: flex;
+  flex-direction: row;
+  gap: 18px;
+  align-items: stretch;
+}
+
+.tv-deduction {
+  background: linear-gradient(135deg, #ffb300, var(--deduction-yellow));
+  border-radius: 18px;
+  padding: 14px 26px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  box-shadow: 0 8px 30px rgba(249, 168, 37, 0.35);
+  border: 3px solid rgba(255,255,255,0.2);
+  flex: 1;
+  width: 100%;
+}
+
+.tv-deduction-label {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(0,0,0,0.7);
+  white-space: nowrap;
+}
+
+.tv-deduction-value {
+  color: var(--deduction-yellow-dark);
+  font-size: clamp(36px, 5vw, 56px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.tv-deduction-prefix {
+  font-size: 0.7em;
+  vertical-align: top;
+  opacity: 0.7;
+  margin-right: 5px;
+}
+
+.tv-event-tag {
+  background: rgba(0,0,0,0.25);
+  color: rgba(255,255,255,0.95);
+  border-radius: 18px;
+  padding: 14px 22px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 2px solid rgba(255,255,255,0.1);
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tv-nav {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 25px;
+  flex-shrink: 0;
+}
+
+.tv-nav-btn {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.3);
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tv-nav-btn:hover:not(:disabled) {
+  background: var(--cvsu-gold);
+  color: var(--cvsu-green-dark);
+  border-color: var(--cvsu-gold);
+  transform: translateY(-2px);
+}
+
+.tv-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.tv-nav-info {
+  color: rgba(255,255,255,0.9);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+}
+
+@media (max-width: 1100px) {
+  .tv-display { padding: 25px 20px; }
+  .tv-performer-name { font-size: 42px; }
+  .tv-brand-text h2 { font-size: 26px; }
+  .tv-brand-logo { width: 60px; height: 60px; font-size: 17px; }
+  .tv-main { gap: 18px; }
+  .tv-judge-value { font-size: 32px; }
+}
+
+@media (max-width: 700px) {
+  .tv-display { padding: 16px 12px; }
+  .tv-top { flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+  .tv-brand-text h2 { font-size: 20px; }
+  .tv-brand-text p { font-size: 10px; letter-spacing: 1px; }
+  .tv-brand-logo { width: 50px; height: 50px; font-size: 14px; }
+  .tv-close { padding: 8px 16px; font-size: 12px; }
+  .tv-performer-name { font-size: 28px; }
+  .tv-rank-badge { font-size: 13px; padding: 5px 16px; margin-bottom: 14px; }
+  .tv-main {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 14px;
+  }
+  .tv-main > .tv-total { grid-column: 1; grid-row: 1; }
+  .tv-main > .tv-judges { grid-column: 1; grid-row: 2; }
+  .tv-main > .tv-side { grid-column: 1; grid-row: 3; flex-direction: column; }
+  .tv-judges { padding: 18px 16px; }
+  .tv-section-label { font-size: 13px; letter-spacing: 2px; }
+  .tv-judge-value { font-size: 28px; }
+  .tv-judge-label { font-size: 11px; min-width: 60px; }
+  .tv-total-label { font-size: 13px; letter-spacing: 2.5px; }
+  .tv-deduction-label { font-size: 12px; letter-spacing: 2px; }
+  .tv-nav-btn { padding: 10px 18px; font-size: 11px; }
+  .tv-nav-info { font-size: 11px; padding: 0 8px; }
+}
+
 /* ==================== Tablet & Phone Responsive ==================== */
 @media (max-width: 768px) {
   body { padding: 12px; }
@@ -1125,6 +1550,51 @@ body {
 
 </div>
 
+<!-- ==================== TV / Big Screen Display ==================== -->
+<div class="tv-display" id="tv-display">
+  <div class="tv-top">
+    <div class="tv-brand">
+      <div class="tv-brand-logo">CvSU</div>
+      <div class="tv-brand-text">
+        <h2 id="tv-event">U-Games 2026</h2>
+        <p id="tv-category">Cavite State University · Main Campus</p>
+      </div>
+    </div>
+    <button class="tv-close" id="tv-close">✕ Close (Esc)</button>
+  </div>
+
+  <div class="tv-rank-row">
+    <div class="tv-rank-badge" id="tv-rank">— Rank —</div>
+  </div>
+  <div class="tv-performer-name" id="tv-performer-name">Performer</div>
+
+  <div class="tv-main">
+    <div class="tv-judges">
+      <div class="tv-section-label">Judges' Scores</div>
+      <div class="tv-judges-list" id="tv-judges-list"></div>
+    </div>
+
+    <div class="tv-total">
+      <div class="tv-total-label">Total Score</div>
+      <div class="tv-total-value" id="tv-total-value">0</div>
+      <div class="tv-total-formula" id="tv-total-formula"></div>
+    </div>
+
+    <div class="tv-side">
+      <div class="tv-deduction">
+        <div class="tv-deduction-label">Deduction</div>
+        <div class="tv-deduction-value"><span class="tv-deduction-prefix">−</span><span id="tv-deduction-value">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tv-nav">
+    <button class="tv-nav-btn" id="tv-prev">← Previous</button>
+    <div class="tv-nav-info" id="tv-nav-info">1 / 1</div>
+    <button class="tv-nav-btn" id="tv-next">Next →</button>
+  </div>
+</div>
+
 <input type="file" id="import-file" accept=".json" style="display:none">
 
 <div class="toast" id="toast"></div>
@@ -1324,6 +1794,7 @@ function renderPerformers() {
                  value="${escapeHtml(p.name)}" placeholder="Performer name" maxlength="80">
         </div>
         <div class="performer-actions">
+          <button class="icon-btn icon-btn-display" title="Show on TV / Big Screen" aria-label="Display">📺</button>
           <button class="icon-btn" data-action="delete" data-pid="${p.id}" title="Delete performer" aria-label="Delete">🗑</button>
         </div>
       </div>
@@ -1347,6 +1818,15 @@ function renderPerformers() {
           <div class="total-value">${formatNumber(calc.final)}</div>
         </div>
       </div>`;
+
+    // Bind the TV display button directly — avoids all delegation/blur timing bugs
+    const tvBtn = card.querySelector('.icon-btn-display');
+    if (tvBtn) {
+      tvBtn.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        openTvDisplay(p.id);
+      });
+    }
 
     list.appendChild(card);
   });
@@ -1619,6 +2099,7 @@ function bindMainEvents() {
       saveState();
       updateCardLive(pid);
       renderLeaderboard();
+      refreshTvIfOpen();
     } else if (t.classList.contains('deduction-input')) {
       const clamped = clampDeduction(t.value);
       if (clamped !== t.value) t.value = clamped;
@@ -1626,10 +2107,12 @@ function bindMainEvents() {
       saveState();
       updateCardLive(pid);
       renderLeaderboard();
+      refreshTvIfOpen();
     } else if (t.classList.contains('performer-name')) {
       p.name = t.value;
       saveState();
       renderLeaderboard();
+      refreshTvIfOpen();
     }
   });
 
@@ -1637,7 +2120,7 @@ function bindMainEvents() {
   $('#performers-list').addEventListener('blur', (e) => {
     const t = e.target;
     if (t.classList.contains('score-input') || t.classList.contains('deduction-input')) {
-      renderAll();
+      setTimeout(() => renderAll(), 200);
     }
   }, true);
 
@@ -1646,6 +2129,7 @@ function bindMainEvents() {
     if (!btn) return;
     const pid = btn.dataset.pid;
     if (btn.dataset.action === 'delete') deletePerformer(pid);
+    else if (btn.dataset.action === 'display') openTvDisplay(pid);
   });
 
   // Enter advances to next score input (quality-of-life)
@@ -1687,10 +2171,113 @@ function bindMainEvents() {
   });
 }
 
+// ============== TV Display ==============
+let tvCurrentId = null;
+
+function openTvDisplay(id) {
+  tvCurrentId = id;
+  renderTvDisplay();
+  $('#tv-display').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeTvDisplay() {
+  $('#tv-display').classList.remove('active');
+  document.body.style.overflow = '';
+  tvCurrentId = null;
+}
+
+function tvNavigate(dir) {
+  if (state.performers.length === 0) return;
+  const idx = state.performers.findIndex(p => p.id === tvCurrentId);
+  if (idx === -1) return;
+  const newIdx = (idx + dir + state.performers.length) % state.performers.length;
+  tvCurrentId = state.performers[newIdx].id;
+  renderTvDisplay();
+}
+
+function ordinal(n) {
+  if (!n) return '—';
+  const s = ['th','st','nd','rd'], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
+}
+
+function renderTvDisplay() {
+  if (!tvCurrentId) return;
+  const p = state.performers.find(x => x.id === tvCurrentId);
+  if (!p) { closeTvDisplay(); return; }
+  ensureShape(p);
+  const calc = calculate(p);
+  const rankMap = getRankMap();
+  const rank = rankMap.get(p.id);
+
+  $('#tv-event').textContent = state.event;
+  $('#tv-category').textContent = (state.category || 'Cavite State University') + ' · Main Campus';
+  $('#tv-performer-name').textContent = p.name || 'Unnamed Performer';
+  $('#tv-rank').textContent = rank ? `${ordinal(rank)} Place` : 'Awaiting Score';
+
+  // Judges list
+  const judgesList = $('#tv-judges-list');
+  judgesList.innerHTML = '';
+  for (let i = 0; i < state.numJudges; i++) {
+    const row = document.createElement('div');
+    let cls = 'tv-judge-row';
+    let tag = '';
+    if (i === calc.droppedHighIdx) { cls += ' dropped'; tag = '<span class="tv-judge-tag">HIGH</span>'; }
+    if (i === calc.droppedLowIdx)  { cls += ' dropped'; tag = '<span class="tv-judge-tag">LOW</span>'; }
+    row.className = cls;
+    const scoreVal = (p.scores[i] !== '' && p.scores[i] !== undefined && p.scores[i] !== null && !isNaN(parseFloat(p.scores[i])))
+      ? formatNumber(parseFloat(p.scores[i])) : '—';
+    row.innerHTML = `
+      <div class="tv-judge-label">Judge ${i + 1}${tag}</div>
+      <div class="tv-judge-value">${scoreVal}</div>`;
+    judgesList.appendChild(row);
+  }
+
+  // Total
+  $('#tv-total-value').textContent = formatNumber(calc.final);
+  const middleCount = Math.max(0, state.numJudges - 2);
+  $('#tv-total-formula').textContent = calc.filledCount >= 3
+    ? `Sum of mid ${middleCount} (${formatNumber(calc.middleSum)}) − Deduction (${formatNumber(calc.deduction)})`
+    : `Awaiting scores · ${calc.filledCount}/${state.numJudges} judges entered`;
+
+  // Deduction
+  $('#tv-deduction-value').textContent = formatNumber(calc.deduction);
+
+  // Nav
+  const idx = state.performers.findIndex(x => x.id === tvCurrentId);
+  $('#tv-nav-info').textContent = `${idx + 1} / ${state.performers.length}`;
+  $('#tv-prev').disabled = state.performers.length <= 1;
+  $('#tv-next').disabled = state.performers.length <= 1;
+}
+
+function bindTvDisplay() {
+  $('#tv-close').addEventListener('click', closeTvDisplay);
+  $('#tv-prev').addEventListener('click', () => tvNavigate(-1));
+  $('#tv-next').addEventListener('click', () => tvNavigate(1));
+  document.addEventListener('keydown', (e) => {
+    if (!$('#tv-display').classList.contains('active')) return;
+    if (e.key === 'Escape') closeTvDisplay();
+    else if (e.key === 'ArrowLeft') tvNavigate(-1);
+    else if (e.key === 'ArrowRight') tvNavigate(1);
+    else if (e.key === 'f' || e.key === 'F') {
+      // Toggle fullscreen
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    }
+  });
+}
+
+// Re-render TV when underlying data changes
+function refreshTvIfOpen() {
+  if ($('#tv-display').classList.contains('active')) renderTvDisplay();
+}
+
 // ============== Init ==============
 function init() {
   bindSetupForm();
   bindMainEvents();
+  bindTvDisplay();
 
   if (loadState()) {
     state.performers.forEach(ensureShape);
